@@ -1,11 +1,10 @@
-# Compact Bidirectional Transformer for Image Captioning
+# PrefixCap: Efficiently Gluing ViT and GPT for Image Captioning
 
 ## Requirements
 - Python 3.8
-- Pytorch 1.6
-- lmdb
-- h5py
-- tensorboardX
+- Pytorch 1.7.1
+- You can simply install requirements by executing **pip install -r requirements.txt**
+
 
 ## Prepare Data
 1. Please use **git clone --recurse-submodules** to clone this repository and remember to follow initialization steps in coco-caption/README.md.
