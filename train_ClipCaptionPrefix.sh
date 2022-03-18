@@ -1,0 +1,2 @@
+cd  /zhouyuanen/code/self-critical.pytorch
+python  train.py   --gpt_type   distilgpt2    --caption_model   ClipCaption   --group   1   --mapping_type  TokenLearner   --noamopt --noamopt_warmup 5000   --seq_per_img 5 --batch_size 8 --beam_size 1 --learning_rate 2e-5  --learning_rate_decay_start 0  --scheduled_sampling_start 0  --save_checkpoint_every 1000  --max_epochs 10     --checkpoint_path   save/new/flickr30k/ClipCaption-TokenLearner-distilgpt2-clip-vit-large-patch14-flickr30k-retry    --id  ClipCaption-TokenLearner-distilgpt2-clip-vit-large-patch14-flickr30k-retry
