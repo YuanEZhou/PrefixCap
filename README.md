@@ -3,7 +3,7 @@
 ## Requirements
 - Python 3.8
 - Pytorch 1.7.1
-- You can simply install requirements by executing **pip install -r requirements.txt**
+- You can simply install requirements by executing ```pip install -r requirements.txt```
 
 
 ## Prepare Data
