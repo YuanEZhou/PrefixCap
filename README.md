@@ -16,7 +16,7 @@
    c)```python  scripts/feat_extractor.py  --dataset flickr30k  --input_json    data/dataset_flickr30k.json   --output_dir   data/clip-vit-large-patch14-flickr30k    --images_root  data/flickr30k_images  --model_root   checkpoint/clip-vit-large-patch14```                
    d)```python  scripts/feat_extractor.py  --dataset flickr30k  --input_json    data/dataset_flickr30k.json   --output_dir   data/clip-vit-base-patch16-flickr30k    --images_root  data/flickr30k_images  --model_root   checkpoint/clip-vit-base-patch16```  
 
-7. Download part checkpoints of our models from [here]() and extract them to 'save/new/'.
+7. Download part checkpoints of our models from [here]() and extract them to 'save/new/'. Additionally, download the [shell script](https://mailhfuteducn-my.sharepoint.com/:u:/g/personal/ye_zhou_mail_hfut_edu_cn/ETbNUbIfs2pFh5kqwUuY59QBrT4Poq8z-FRXDrRkQQe9pg?e=INwm7l) and put it under 'save/new/'.
 
 ## Offline Evaluation
 For example, to reproduce the results of PrefixCap-TSTM model when only freezing CLIP-ViT and using self-critical training on Karpathy test split, just run
