@@ -51,11 +51,11 @@ You can also eval other saved models in a similar way.
          ```
    - **Model trained with only freezing CLIP-ViT**
       - PrefixCap-TSTM
-         1.  In the cross-entropy  training stage, such as using clip-vit-large-patch14 feature, one GPU with 12G memory is ok,  jsut run 
+         1).  In the cross-entropy  training stage, such as using clip-vit-large-patch14 feature, one GPU with 12G memory is ok,  jsut run 
          ```
          python  train.py   --gpt_type  gpt2    --caption_model   ClipCaption   --group   1   --mapping_type  TokenLearner   --noamopt --noamopt_warmup 5000   --seq_per_img 5 --batch_size 8 --beam_size 1  --scheduled_sampling_start 0  --save_checkpoint_every 5000  --max_epochs 10     --checkpoint_path   save/new/ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14    --id  ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14   --dataset  coco   --input_json  data/cocotalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_fc    --input_att_dir   data/clip-vit-large-patch14/clip-vit-large-patch14_att      --input_box_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_box    --input_label_h5    data/cocotalk_clip_prefix_label.h5    --cached_tokens    coco-train-clip-prefix-idxs
          ```
-         2. Then in the self-critical training stage, you need four GPUs with 12G memory each, please copy the above pretrained model first
+         2). Then in the self-critical training stage, you need four GPUs with 12G memory each, please copy the above pretrained model first
 
          ```
          cd save/new
