@@ -6,12 +6,14 @@
 
 
 ## Prepare Data
-1. Please use **git clone --recurse-submodules** to clone this repository and remember to follow initialization steps in coco-caption/README.md. Then download the [Flickr30k reference file](https://mailhfuteducn-my.sharepoint.com/:u:/g/personal/ye_zhou_mail_hfut_edu_cn/EdS09HVkYUlIoj9Al65kUtsBOVeYM9wsb3OJHitiBnnGGA?e=TljNdU) and put it under coco-caption/annotations/.
-2. Download the preprocessd dataset from this [link](https://mailhfuteducn-my.sharepoint.com/:u:/g/personal/ye_zhou_mail_hfut_edu_cn/ERMYZRiY-_NMpOzDRwX9f4oBMfCZOrtCA1vwh-MAVaxQjw?e=woB7hu) and extract it to data/.
-3. Download the MSCOCO images from [link](https://cocodataset.org/#download). We need 2014 training images and 2014 val. images. You should put the train2014/ and val2014/ in the same directory, denoted as $IMAGE_ROOT.  Please download the corresponding CLIP-ViT model files from [link](https://huggingface.co/openai) and put them in a directory, denoted as $MODEL_ROOT.
--ffff
--fff
-5. Download part checkpoints from [here](https://entuedu-my.sharepoint.com/:u:/g/personal/n1806230d_e_ntu_edu_sg/ER1w9q3ekqpKmiVPW_yL2pABY2TSyb_PoyBK0xDqEHH_zg?e=7Hfwdk) and extract them to save/.
+1. Please use **git clone --recurse-submodules** to clone this repository and remember to follow initialization steps in coco-caption/README.md. Then download the [Flickr30k reference file](https://mailhfuteducn-my.sharepoint.com/:u:/g/personal/ye_zhou_mail_hfut_edu_cn/EdS09HVkYUlIoj9Al65kUtsBOVeYM9wsb3OJHitiBnnGGA?e=TljNdU) and put it under 'coco-caption/annotations/'.
+2. Download the preprocessd dataset from this [link](https://mailhfuteducn-my.sharepoint.com/:u:/g/personal/ye_zhou_mail_hfut_edu_cn/ERMYZRiY-_NMpOzDRwX9f4oBMfCZOrtCA1vwh-MAVaxQjw?e=woB7hu) and extract it to 'data/'.
+3. Download the MSCOCO images from [link](https://cocodataset.org/#download). We need 2014 training images and 2014 val. images. You should unzip and put the train2014/ and val2014/ in the same directory, such as 'data/coco_images'.  Download the Flickr30K images from [link](http://shannon.cs.illinois.edu/DenotationGraph/) and extract it to a directory, such as  'data/flickr30k_images'.
+4. Please download the `clip-vit-base-patch16` (`clip-vit-large-patch14`) model files from [link](https://huggingface.co/openai) and put them under 'checkpoint/clip-vit-base-patch16'('checkpoint/clip-vit-large-patch14').
+5. Please extract required image features by executing     
+         
+   fifiifif
+7. Download part checkpoints from [here](https://entuedu-my.sharepoint.com/:u:/g/personal/n1806230d_e_ntu_edu_sg/ER1w9q3ekqpKmiVPW_yL2pABY2TSyb_PoyBK0xDqEHH_zg?e=7Hfwdk) and extract them to save/.
 
 ## Offline Evaluation
 To reproduce the results of single CBTIC model on Karpathy test split, just run
