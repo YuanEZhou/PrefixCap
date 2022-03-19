@@ -107,4 +107,4 @@ You can also eval other saved models in a similar way.
 ```
 
 ## Acknowledgements
-This repository is built upon [self-critical.pytorch](https://github.com/ruotianluo/self-critical.pytorch). Thanks for the released  code.
+This repository is built upon [self-critical.pytorch](https://github.com/ruotianluo/self-critical.pytorch), [CLIP_prefix_caption](https://github.com/rmokady/CLIP_prefix_caption) and [TokenLearner](https://github.com/xiamenwcy/TokenLearner). Thanks for their released  code.
