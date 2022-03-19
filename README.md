@@ -49,23 +49,57 @@ You can also eval other saved models in a similar way.
          ```
          python  train.py   --self_critical_after  9   --max_length   20   --gpt_type   gpt2   --caption_model   ClipCaptionPrefix  --group   0   --mapping_type  TokenLearner    --seq_per_img 5 --batch_size 8 --beam_size 1  --learning_rate 1e-5    --save_checkpoint_every 5000  --max_epochs 20     --start_from    save/new/nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14     --checkpoint_path   save/new/nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14  --id  nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14    --dataset  coco   --input_json  data/cocotalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_fc    --input_att_dir   data/clip-vit-large-patch14/clip-vit-large-patch14_att      --input_box_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_box    --input_label_h5    data/cocotalk_clip_prefix_label.h5    --cached_tokens    coco-train-clip-prefix-idxs
          ```
-   - **Model trained with only freezing CLIP-ViT**
-      - PrefixCap-TSTM
+
+      - PrefixCap-QT
          1.  In the cross-entropy  training stage, such as using clip-vit-large-patch14 feature, one GPU with 12G memory is ok,  jsut run 
          ```
-         python  train.py   --gpt_type  gpt2    --caption_model   ClipCaption   --group   1   --mapping_type  TokenLearner   --noamopt --noamopt_warmup 5000   --seq_per_img 5 --batch_size 8 --beam_size 1  --scheduled_sampling_start 0  --save_checkpoint_every 5000  --max_epochs 10     --checkpoint_path   save/new/ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14    --id  ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14   --dataset  coco   --input_json  data/cocotalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_fc    --input_att_dir   data/clip-vit-large-patch14/clip-vit-large-patch14_att      --input_box_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_box    --input_label_h5    data/cocotalk_clip_prefix_label.h5    --cached_tokens    coco-train-clip-prefix-idxs
+         python  train.py   --gpt_type  gpt2    --caption_model   ClipCaptionPrefix   --group   0   --mapping_type  transformerV12   --noamopt --noamopt_warmup 15000   --seq_per_img 5 --batch_size 8 --beam_size 1  --scheduled_sampling_start 0  --save_checkpoint_every 5000  --max_epochs 10     --checkpoint_path   save/new/ClipCaptionPrefix-transformerV12-gpt2-clip-vit-large-patch14    --id  ClipCaptionPrefix-transformerV12-gpt2-clip-vit-large-patch14   --dataset  coco   --input_json  data/cocotalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_fc    --input_att_dir   data/clip-vit-large-patch14/clip-vit-large-patch14_att      --input_box_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_box    --input_label_h5    data/cocotalk_clip_prefix_label.h5    --cached_tokens    coco-train-clip-prefix-idxs
          ```
          2. Then in the self-critical training stage, you need four GPUs with 12G memory each, please copy the above pretrained model first
 
          ```
          cd save/new
-         ./copy_model.sh  ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14    nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14
+         ./copy_model.sh  ClipCaptionPrefix-transformerV12-gpt2-clip-vit-large-patch14    nsc-ClipCaptionPrefix-transformerV12-gpt2-clip-vit-large-patch14
          cd ../../
          ``` 
          and then run
          ```
-         python  train.py   --self_critical_after  9   --max_length   20   --gpt_type   gpt2   --caption_model   ClipCaption  --group   1   --mapping_type  TokenLearner    --seq_per_img 5 --batch_size 8 --beam_size 1  --learning_rate 1e-5    --save_checkpoint_every 5000  --max_epochs 20     --start_from    save/new/nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14     --checkpoint_path   save/new/nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14  --id  nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14    --dataset  coco   --input_json  data/cocotalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_fc    --input_att_dir   data/clip-vit-large-patch14/clip-vit-large-patch14_att      --input_box_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_box    --input_label_h5    data/cocotalk_clip_prefix_label.h5    --cached_tokens    coco-train-clip-prefix-idxs
-         ```
+         python  train.py   --self_critical_after  9   --max_length   20   --gpt_type   gpt2   --caption_model   ClipCaptionPrefix  --group   0   --mapping_type  transformerV12    --seq_per_img 5 --batch_size 8 --beam_size 1  --learning_rate 1e-5    --save_checkpoint_every 5000  --max_epochs 20     --start_from    save/new/nsc-ClipCaptionPrefix-transformerV12-gpt2-clip-vit-large-patch14     --checkpoint_path   save/new/nsc-ClipCaptionPrefix-transformerV12-gpt2-clip-vit-large-patch14  --id  nsc-ClipCaptionPrefix-transformerV12-gpt2-clip-vit-large-patch14    --dataset  coco   --input_json  data/cocotalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_fc    --input_att_dir   data/clip-vit-large-patch14/clip-vit-large-patch14_att      --input_box_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_box    --input_label_h5    data/cocotalk_clip_prefix_label.h5    --cached_tokens    coco-train-clip-prefix-idxs
+
+   - **Model trained with only freezing CLIP-ViT**
+      - PrefixCap-TSTM
+         - For MSCOCO
+            1.  In the cross-entropy  training stage, such as using clip-vit-large-patch14 feature, one GPU with 12G memory is ok,  jsut run 
+            ```
+            python  train.py   --gpt_type  gpt2    --caption_model   ClipCaption   --group   1   --mapping_type  TokenLearner   --noamopt --noamopt_warmup 5000   --seq_per_img 5 --batch_size 8 --beam_size 1  --scheduled_sampling_start 0  --save_checkpoint_every 5000  --max_epochs 10     --checkpoint_path   save/new/ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14    --id  ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14   --dataset  coco   --input_json  data/cocotalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_fc    --input_att_dir   data/clip-vit-large-patch14/clip-vit-large-patch14_att      --input_box_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_box    --input_label_h5    data/cocotalk_clip_prefix_label.h5    --cached_tokens    coco-train-clip-prefix-idxs
+            ```
+            2. Then in the self-critical training stage, you need four GPUs with 12G memory each, please copy the above pretrained model first
+
+            ```
+            cd save/new
+            ./copy_model.sh  ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14    nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14
+            cd ../../
+            ``` 
+            and then run
+            ```
+            python  train.py   --self_critical_after  9   --max_length   20   --gpt_type   gpt2   --caption_model   ClipCaption  --group   1   --mapping_type  TokenLearner    --seq_per_img 5 --batch_size 8 --beam_size 1  --learning_rate 1e-5    --save_checkpoint_every 5000  --max_epochs 20     --start_from    save/new/nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14     --checkpoint_path   save/new/nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14  --id  nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14    --dataset  coco   --input_json  data/cocotalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_fc    --input_att_dir   data/clip-vit-large-patch14/clip-vit-large-patch14_att      --input_box_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_box    --input_label_h5    data/cocotalk_clip_prefix_label.h5    --cached_tokens    coco-train-clip-prefix-idxs
+            ```
+         - For Flickr30k
+            1.  In the cross-entropy  training stage, such as using clip-vit-large-patch14 feature, one GPU with 12G memory is ok,  jsut run 
+            ```
+            python  train.py   --gpt_type   distilgpt2    --caption_model   ClipCaption   --group   1   --mapping_type  TokenLearner   --noamopt --noamopt_warmup 5000   --seq_per_img 5 --batch_size 8 --beam_size 1   --scheduled_sampling_start 0  --save_checkpoint_every 1000  --max_epochs 10     --checkpoint_path   save/new/flickr30k/ClipCaption-TokenLearner-distilgpt2-clip-vit-large-patch14-flickr30k    --id  ClipCaption-TokenLearner-distilgpt2-clip-vit-large-patch14-flickr30k  --dataset  flickr30k   --input_json  data/flickr30ktalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14-flickr30k/clip-vit-large-patch14-flickr30k_fc    --input_att_dir   data/clip-vit-large-patch14-flickr30k/clip-vit-large-patch14-flickr30k_att      --input_box_dir    data/clip-vit-large-patch14-flickr30k/clip-vit-large-patch14-flickr30k_box    --input_label_h5    data/flickr30ktalk_clip_prefix_label.h5    --cached_tokens    flickr30k-train-clip-prefix-idxs
+            ```
+            2. Then in the self-critical training stage, you need two GPUs with 12G memory each, please copy the above pretrained model first
+
+            ```
+            cd save/new/flickr30k
+            ./copy_model.sh  ClipCaption-TokenLearner-distilgpt2-clip-vit-large-patch14-flickr30k    nsc-ClipCaption-TokenLearner-distilgpt2-clip-vit-large-patch14-flickr30k
+            cd ../../../
+            ``` 
+            and then run
+            ```
+            python  train.py   --self_critical_after  9   --max_length   20   --gpt_type   distilgpt2   --caption_model   ClipCaption  --group   1   --mapping_type  TokenLearner    --seq_per_img 5 --batch_size 8 --beam_size 1  --learning_rate 1e-5    --save_checkpoint_every 1000  --max_epochs 20     --start_from    save/new/flickr30k/nsc-ClipCaption-TokenLearner-distilgpt2-clip-vit-large-patch14-flickr30k     --checkpoint_path   save/new/flickr30k/nsc-ClipCaption-TokenLearner-distilgpt2-clip-vit-large-patch14-flickr30k  --id  nsc-ClipCaption-TokenLearner-distilgpt2-clip-vit-large-patch14-flickr30k    --dataset  flickr30k   --input_json  data/flickr30ktalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14-flickr30k/clip-vit-large-patch14-flickr30k_fc    --input_att_dir   data/clip-vit-large-patch14-flickr30k/clip-vit-large-patch14-flickr30k_att      --input_box_dir    data/clip-vit-large-patch14-flickr30k/clip-vit-large-patch14-flickr30k_box    --input_label_h5    data/flickr30ktalk_clip_prefix_label.h5    --cached_tokens    flickr30k-train-clip-prefix-idxs
+            ```
 ## Citation
 
 ```
