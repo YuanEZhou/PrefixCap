@@ -28,7 +28,7 @@ parser.add_argument('--cnn_model', type=str,  default='resnet101',
 parser.add_argument('--infos_path', type=str, default='save/new/ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14/infos_ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14-best.pkl',
                 help='path to infos to evaluate')
 # Basic options
-parser.add_argument('--batch_size', type=int, default=1,
+parser.add_argument('--batch_size', type=int, default=100,
                 help='if > 0 then overrule, otherwise load from checkpoint.')
 parser.add_argument('--num_images', type=int, default=-1,
                 help='how many images to use when periodically evaluating the loss? (-1 = all)')
