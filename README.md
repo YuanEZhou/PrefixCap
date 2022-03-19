@@ -10,10 +10,13 @@
 2. Download the preprocessd dataset from this [link](https://mailhfuteducn-my.sharepoint.com/:u:/g/personal/ye_zhou_mail_hfut_edu_cn/ERMYZRiY-_NMpOzDRwX9f4oBMfCZOrtCA1vwh-MAVaxQjw?e=woB7hu) and extract it to 'data/'.
 3. Download the MSCOCO images from [link](https://cocodataset.org/#download). We need 2014 training images and 2014 val. images. You should unzip and put the train2014/ and val2014/ in the same directory, such as 'data/coco_images'.  Download the Flickr30K images from [link](http://shannon.cs.illinois.edu/DenotationGraph/) and extract it to a directory, such as  'data/flickr30k_images'.
 4. Please download the `clip-vit-base-patch16` (`clip-vit-large-patch14`) model files from [link](https://huggingface.co/openai) and put them under 'checkpoint/clip-vit-base-patch16'('checkpoint/clip-vit-large-patch14').
-5. Please extract required image features by executing     
-         
-   fifiifif
-7. Download part checkpoints from [here](https://entuedu-my.sharepoint.com/:u:/g/personal/n1806230d_e_ntu_edu_sg/ER1w9q3ekqpKmiVPW_yL2pABY2TSyb_PoyBK0xDqEHH_zg?e=7Hfwdk) and extract them to save/.
+5. Please extract required image features by executing      
+   a)```python  scripts/feat_extractor.py  --dataset mscoco  --input_json    data/dataset_coco.json   --output_dir   data/clip-vit-large-patch14    --images_root  data/coco_images  --model_root   checkpoint/clip-vit-large-patch14```         
+   b)```python  scripts/feat_extractor.py  --dataset mscoco  --input_json    data/dataset_coco.json   --output_dir   data/clip-vit-base-patch16-224    --images_root  data/coco_images  --model_root   checkpoint/clip-vit-base-patch16```        
+   c)```python  scripts/feat_extractor.py  --dataset flickr30k  --input_json    data/dataset_flickr30k.json   --output_dir   data/clip-vit-large-patch14-flickr30k    --images_root  data/flickr30k_images  --model_root   checkpoint/clip-vit-large-patch14```                
+   d)```python  scripts/feat_extractor.py  --dataset flickr30k  --input_json    data/dataset_flickr30k.json   --output_dir   data/clip-vit-base-patch16-flickr30k    --images_root  data/flickr30k_images  --model_root   checkpoint/clip-vit-base-patch16```  
+
+7. Download part checkpoints of our models from [here]() and extract them to 'save/new/'.
 
 ## Offline Evaluation
 To reproduce the results of single CBTIC model on Karpathy test split, just run
