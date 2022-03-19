@@ -77,12 +77,12 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser()
 
   # input json
-  parser.add_argument('--dataset', default='mscoco', help='mscoco|flickr30k')
-  parser.add_argument('--input_json', default='data/dataset_coco.json', help='input json file to process into hdf5')
-  parser.add_argument('--output_dir', default='data/clip-vit-large-patch14', help='feature output directory.')
+  parser.add_argument('--dataset', default='mscoco', type=str, help='mscoco|flickr30k')
+  parser.add_argument('--input_json', default='data/dataset_coco.json', type=str, help='input json file to process into hdf5')
+  parser.add_argument('--output_dir', default='data/clip-vit-large-patch14', type=str, help='feature output directory.')
 
   # options
-  parser.add_argument('--images_root', default='data/coco_images', help='root location in which images are stored.')
+  parser.add_argument('--images_root', default='data/coco_images', type=str, help='root location in which images are stored.')
   parser.add_argument('--model_root', default='checkpoint/clip-vit-large-patch14', type=str, help='model root. Please download the corresponding files from https://huggingface.co/openai')
 
   args = parser.parse_args()
