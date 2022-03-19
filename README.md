@@ -24,44 +24,37 @@ For example, to reproduce the results of PrefixCap-TSTM model when only freezing
 ```
 python  eval.py  --model  save/new/nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14/model-best.pth   --infos_path  save/new/nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14/infos_nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14-best.pkl      --beam_size   3   --id  nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14   --split test
 ```
-To reproduce the results of ensemble of CBTIC models on Karpathy test split, just run
+To reproduce the results of PrefixCap-TSTM model when freezing CLIP-ViT and GPT2 and using self-critical training on Karpathy test split, just run
 ```
-python eval_ensemble.py   --ids   nsc-transformer-cb-VinVL-feat  nsc-transformer-cb-VinVL-feat-seed1   nsc-transformer-cb-VinVL-feat-seed2  nsc-transformer-cb-VinVL-feat-seed3 --weights  1 1 1 1  --beam_size  2   --split  test
+python  eval.py  --model  save/new/nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14/model-best.pth   --infos_path  save/new/nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14/infos_nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14-best.pkl      --beam_size   3   --id  nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14   --split test
 ```
+
+You can also eval other saved models in a similar way.
 
 ## Training
-1.  In the first training stage, such as using VinVL feature,  run 
-```
-python  train.py   --noamopt --noamopt_warmup 20000   --seq_per_img 5 --batch_size 10 --beam_size 1 --learning_rate 5e-4 --num_layers 6 --input_encoding_size 512 --rnn_size 2048 --learning_rate_decay_start 0  --scheduled_sampling_start 0  --save_checkpoint_every 3000 --language_eval 1 --val_images_use 5000 --max_epochs 15     --checkpoint_path   save/transformer-cb-VinVL-feat   --id   transformer-cb-VinVL-feat   --caption_model  cbt     --input_fc_dir   data/mscoco_VinVL/cocobu_fc   --input_att_dir   data/mscoco_VinVL/cocobu_att    --input_box_dir    data/mscoco_VinVL/cocobu_box    
-```
+   - **Model trained with freezing CLIP-ViT and GPT2**
+      - PrefixCap-TSTM
+         1.  In the cross-entropy  training stage, such as using clip-vit-large-patch14 feature, one GPU with 12G memory is ok,  jsut run 
+         ```
+         python  train.py   --gpt_type  gpt2    --caption_model   ClipCaptionPrefix   --group   0   --mapping_type  TokenLearner   --noamopt --noamopt_warmup 5000   --seq_per_img 5 --batch_size 8 --beam_size 1  --scheduled_sampling_start 0  --save_checkpoint_every 5000  --max_epochs 10     --checkpoint_path   save/new/ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14    --id  ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14   --dataset  coco   --input_json  data/cocotalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_fc    --input_att_dir   data/clip-vit-large-patch14/clip-vit-large-patch14_att      --input_box_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_box    --input_label_h5    data/cocotalk_clip_prefix_label.h5    --cached_tokens    coco-train-clip-prefix-idxs
+         ```
+         2. Then in the self-critical training stage, you need four GPUs with 12G memory each, please copy the above pretrained model first
 
-2. Then in the second training stage, you need two GPUs with 12G memory each, please copy the above pretrained model first
-
-```
-cd save
-./copy_model.sh  transformer-cb-VinVL-feat    nsc-transformer-cb-VinVL-feat
-cd ..
-``` 
-and then run
-```
-python  train.py    --seq_per_img 5 --batch_size 10 --beam_size 1 --learning_rate 1e-5 --num_layers 6 --input_encoding_size 512 --rnn_size 2048  --save_checkpoint_every 3000 --language_eval 1 --val_images_use 5000 --self_critical_after 14  --max_epochs    30  --start_from   save/nsc-transformer-cb-VinVL-feat     --checkpoint_path   save/nsc-transformer-cb-VinVL-feat   --id  nsc-transformer-cb-VinVL-feat   --caption_model  cbt    --input_fc_dir   data/mscoco_VinVL/cocobu_fc   --input_att_dir   data/mscoco_VinVL/cocobu_att    --input_box_dir    data/mscoco_VinVL/cocobu_box 
-```
-
-## Note
-1. Even if  fixing  all random seed, we find that the results of the two runs are still slightly different when using DataParallel on two GPUs. However, the results can be reproduced exactly when using one GPU.
-2. If you are interested in the ablation studies, you can use the `git reflog` to list all commits and use `git reset --hard  commit_id` to change to corresponding commit. 
+         ```
+         cd save/new
+         ./copy_model.sh  ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14    nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14
+         cd ../../
+         ``` 
+         and then run
+         ```
+         python  train.py   --self_critical_after  9   --max_length   20   --gpt_type   gpt2   --caption_model   ClipCaptionPrefix  --group   0   --mapping_type  TokenLearner    --seq_per_img 5 --batch_size 8 --beam_size 1  --learning_rate 1e-5    --save_checkpoint_every 5000  --max_epochs 20     --start_from    save/new/nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14     --checkpoint_path   save/new/nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14  --id  nsc-ClipCaptionPrefix-TokenLearner-gpt2-clip-vit-large-patch14    --dataset  coco   --input_json  data/cocotalk_clip_prefix.json      --input_fc_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_fc    --input_att_dir   data/clip-vit-large-patch14/clip-vit-large-patch14_att      --input_box_dir    data/clip-vit-large-patch14/clip-vit-large-patch14_box    --input_label_h5    data/cocotalk_clip_prefix_label.h5    --cached_tokens    coco-train-clip-prefix-idxs
+         ```
+   - **Model trained with only freezing CLIP-ViT**
 
 ## Citation
 
 ```
-@misc{zhou2022compact,
-      title={Compact Bidirectional Transformer for Image Captioning}, 
-      author={Yuanen Zhou and Zhenzhen Hu and Daqing Liu and Huixia Ben and Meng Wang},
-      year={2022},
-      eprint={2201.01984},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
+
 ```
 
 ## Acknowledgements
