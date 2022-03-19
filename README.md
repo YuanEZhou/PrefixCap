@@ -19,22 +19,16 @@
 7. Download part checkpoints of our models from [here]() and extract them to 'save/new/'.
 
 ## Offline Evaluation
-To reproduce the results of single CBTIC model on Karpathy test split, just run
+For example, to reproduce the results of PrefixCap-TSTM model when only freezing CLIP-ViT and using self-critical training on Karpathy test split, just run
 
 ```
-python  eval.py  --model  save/nsc-transformer-cb-VinVL-feat/model-best.pth   --infos_path  save/nsc-transformer-cb-VinVL-feat/infos_nsc-transformer-cb-VinVL-feat-best.pkl      --beam_size   2   --id  nsc-transformer-cb-VinVL-feat   --split test
+python  eval.py  --model  save/new/nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14/model-best.pth   --infos_path  save/new/nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14/infos_nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14-best.pkl      --beam_size   3   --id  nsc-ClipCaption-TokenLearner-gpt2-clip-vit-large-patch14   --split test
 ```
 To reproduce the results of ensemble of CBTIC models on Karpathy test split, just run
 ```
 python eval_ensemble.py   --ids   nsc-transformer-cb-VinVL-feat  nsc-transformer-cb-VinVL-feat-seed1   nsc-transformer-cb-VinVL-feat-seed2  nsc-transformer-cb-VinVL-feat-seed3 --weights  1 1 1 1  --beam_size  2   --split  test
 ```
 
-## Online Evaluation
-Please first run
-```
-python eval_ensemble.py   --split  test  --language_eval 0  --ids   nsc-transformer-cb-VinVL-feat  nsc-transformer-cb-VinVL-feat-seed1   nsc-transformer-cb-VinVL-feat-seed2  nsc-transformer-cb-VinVL-feat-seed3 --weights  1 1 1 1  --input_json  data/cocotest.json  --input_fc_dir data/mscoco_VinVL/cocobu_test2014/cocobu_fc --input_att_dir  data/mscoco_VinVL/cocobu_test2014/cocobu_att   --input_label_h5    data/cocotalk_bw_label.h5    --language_eval 0        --batch_size  128   --beam_size   2   --id   captions_test2014_cbtic_results 
-```
-and then follow the [instruction](https://cocodataset.org/#captions-eval) to upload results.
 ## Training
 1.  In the first training stage, such as using VinVL feature,  run 
 ```
