@@ -140,8 +140,8 @@ class TokenLearnerModuleV11(nn.Module):
         feat = feat.contiguous().view(feature_shape[0], feature_shape[1] * feature_shape[2], -1)  # Shape: [bs, h*w, c].
 
         # Produced the attended inputs.
-        np.save('./attn_vis.npy', selected.cpu().numpy())
-        pdb.set_trace()
+        #np.save('./attn_vis.npy', selected.cpu().numpy())
+        #pdb.set_trace()
         outputs = torch.einsum("...si,...id->...sd",  selected, feat)  # (B, n_token, c)
         outputs = self.dropout(outputs)
 
